@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#c69014</color>
+    <color name="colorPrimaryDark">#0069C0</color>
+    <color name="colorAccent">#f44336</color>
+
+    <color name="likeBtn">#f44336</color>
+    <color name="dislikeBtn">#747474</color>
+
+</resources>

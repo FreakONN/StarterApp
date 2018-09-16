@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1029804479889",
+    "firebase_url": "https://androidblog-665ce.firebaseio.com",
+    "project_id": "androidblog-665ce",
+    "storage_bucket": "androidblog-665ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029804479889:android:184e4c53bbce5fc6",
+        "android_client_info": {
+          "package_name": "com.example.deusc.androidblog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1029804479889-tr0a4fbhiimb65flvd8q8e1vgt72k4nb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.deusc.androidblog",
+            "certificate_hash": "cdbc170f163d0f3297e146c1f5e39719ddfb8d49"
+          }
+        },
+        {
+          "client_id": "1029804479889-am52r7e1r22vjhqct4l3vv0lbrmv5p8n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDu8XJ1wcKNTjz829ytfUChEvIkZoGE3Ww"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1029804479889-am52r7e1r22vjhqct4l3vv0lbrmv5p8n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

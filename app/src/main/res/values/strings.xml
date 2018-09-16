@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">AndroidBlog</string>
+    <string name="email_hint">Password</string>
+    <string name="mail_hint">Your Email</string>
+    <string name="login_logo_description">Logo_Login_Page</string>
+    <string name="login_btn_text">Login to account</string>
+    <string name="login_reg_btn_text">Need a new Account?</string>
+    <string name="action_search_text">Search</string>
+    <string name="actions_setting_text">Action Settings</string>
+    <string name="action_logout_text">Logout</string>
+    <string name="reg_btn_text">Create new Account</string>
+    <string name="reg_login_text">Hava a account?</string>
+    <string name="reg_pass_text">Password...</string>
+    <string name="reg_confirm_pass_text">Confirm password...</string>
+    <string name="setup_name_hint">Your name</string>
+    <string name="setup_name_text_btn">Save Account Settings</string>
+    <string name="post_desc_hint">Add Description</string>
+    <string name="new_post_btn_hint">Post Blog Entry</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_notification">Notification</string>
+    <string name="nav_account">Account</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="comment_field_text">Please add comment</string>
+    <string name="comments_label">Comments:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+
+</resources>
