@@ -76,7 +76,7 @@
 
     <Button
         android:id="@+id/reg_login_btn"
-        android:layout_width="395dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -86,8 +86,8 @@
         android:paddingTop="15dp"
         android:text="@string/reg_login_text"
         android:textAllCaps="false"
-        android:textSize="18sp"
         android:textColor="@color/colorAccent"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

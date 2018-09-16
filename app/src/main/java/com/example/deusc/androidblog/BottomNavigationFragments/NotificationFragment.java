@@ -47,7 +47,6 @@ public class NotificationFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,27 +71,28 @@ public class NotificationFragment extends Fragment {
         final String currentUser = firebaseAuth.getCurrentUser().getUid();
 
         if(currentUser != null) {
-            firebaseFirestore.collection("Posts").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            firebaseFirestore.collection("Posts").addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    if(!documentSnapshots.isEmpty()){
                         if(documentSnapshots != null){
                             for(DocumentSnapshot query: documentSnapshots){
                                 postUserId = query.getString("user_id");
                                 postId = query.getId();
-                                firebaseFirestore.collection("Posts/" + postId + "/Comments").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                firebaseFirestore.collection("Posts/" + postId + "/Comments").addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
                                     @Override
                                     public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                        for(DocumentSnapshot doc: documentSnapshots.getDocuments()){
-                                            CommentsModel commentsModel = doc.toObject(CommentsModel.class).withId(postId);
-                                            commentsModelList.add(commentsModel);
-                                            notificationsRecyclerAdapter.notifyDataSetChanged();
+                                        if(documentSnapshots != null){
+                                            for(DocumentSnapshot doc: documentSnapshots.getDocuments()){
+                                                CommentsModel commentsModel = doc.toObject(CommentsModel.class).withId(postId);
+                                                commentsModelList.add(commentsModel);
+                                                notificationsRecyclerAdapter.notifyDataSetChanged();
+                                            }
                                         }
                                     }
                                 });
                             }
                         }
-                    }
+
                 }
             });
         }

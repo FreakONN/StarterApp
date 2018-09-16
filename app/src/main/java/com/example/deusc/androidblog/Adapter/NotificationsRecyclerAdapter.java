@@ -73,7 +73,7 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
-                                        String postImage = task.getResult().getString("image_url");
+                                        String postImage = task.getResult().getString("thumbnail");
                                         holder.setPostImage(postImage);
                                     } else {
                                         //Firebase Exception
