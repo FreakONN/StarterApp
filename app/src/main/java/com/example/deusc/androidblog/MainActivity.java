@@ -65,15 +65,18 @@ public class MainActivity extends AppCompatActivity {
             mainBotttomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_containter_frame);
+
                     switch (item.getItemId()){
-                        case R.id.nav_action_account:
-                            fragmentSwitcher(accountFragment);
-                            return true;
                         case R.id.nav_action_home:
-                            fragmentSwitcher(homeFragment);
+                            fragmentSwitcher(homeFragment,currentFragment);
+                            return true;
+                        case R.id.nav_action_account:
+                            fragmentSwitcher(accountFragment,currentFragment);
                             return true;
                         case R.id.nav_action_notificatin:
-                            fragmentSwitcher(notificationFragment);
+                            fragmentSwitcher(notificationFragment,currentFragment);
                             return true;
                         default:
                             return false;
@@ -95,10 +98,8 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         //TODO zamijeniti četiri linije s petljom koja provjerava na kojem smo fragmentu i sakriva ostale po deafaulto smo na home-u stoga ostale skrivamo
 
-
         fragmentTransaction.add(R.id.main_containter_frame, homeFragment);
         //zamijeniti s petljom
-
         fragmentTransaction.add(R.id.main_containter_frame, accountFragment);
         fragmentTransaction.add(R.id.main_containter_frame, notificationFragment);
 
@@ -139,6 +140,30 @@ public class MainActivity extends AppCompatActivity {
         startActivity(loginIntent);
         finish();
     }
+    private void fragmentSwitcher(Fragment fragment, Fragment currentFragment){
+        //replacing(switching) fragment with a new one
+        //TODO riješiti s attach/detach listenerom
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_containter_frame,fragment);
+
+        if(fragment == homeFragment){
+            fragmentTransaction.hide(accountFragment);
+            fragmentTransaction.hide(notificationFragment);
+        }
+
+        if(fragment == accountFragment){
+            fragmentTransaction.hide(homeFragment);
+            fragmentTransaction.hide(notificationFragment);
+        }
+
+        if(fragment == notificationFragment){
+            fragmentTransaction.hide(accountFragment);
+            fragmentTransaction.hide(homeFragment);
+        }
+        fragmentTransaction.show(fragment);
+        fragmentTransaction.commit();
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -166,29 +191,5 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
-    }
-
-    private void fragmentSwitcher(Fragment fragment){
-        //replacing(switching) fragment with a new one
-        //TODO riješiti s attach/detach listenerom
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_containter_frame,fragment);
-
-        if(fragment == homeFragment){
-            fragmentTransaction.hide(accountFragment);
-            fragmentTransaction.hide(notificationFragment);
-        }
-
-        if(fragment == accountFragment){
-            fragmentTransaction.hide(homeFragment);
-            fragmentTransaction.hide(notificationFragment);
-        }
-
-        if(fragment == notificationFragment){
-            fragmentTransaction.hide(accountFragment);
-            fragmentTransaction.hide(homeFragment);
-        }
-        fragmentTransaction.show(fragment);
-        fragmentTransaction.commit();
     }
 }

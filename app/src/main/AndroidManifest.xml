@@ -33,7 +33,6 @@
         <activity
             android:name=".NewPostActivity"
             android:parentActivityName=".MainActivity" />
-        <!--parentActivityName allows us back button on NewPostActivity-->
         <activity android:name=".CommentsActivity"
             android:parentActivityName=".MainActivity" />
     </application>

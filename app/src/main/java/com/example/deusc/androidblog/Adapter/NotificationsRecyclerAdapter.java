@@ -67,20 +67,18 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
             @Override
             public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if(!documentSnapshots.isEmpty()){
-                    if(documentSnapshots != null){
-                        for(DocumentSnapshot query: documentSnapshots){
-                            firebaseFirestore.collection("Posts").document(query.getId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        String postImage = task.getResult().getString("thumbnail");
-                                        holder.setPostImage(postImage);
-                                    } else {
-                                        //Firebase Exception
-                                    }
+                    for(DocumentSnapshot query: documentSnapshots){
+                        firebaseFirestore.collection("Posts").document(query.getId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    String postImage = task.getResult().getString("thumbnail");
+                                    holder.setPostImage(postImage);
+                                } else {
+                                    //Firebase Exception
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 }
             }

@@ -35,12 +35,13 @@ import javax.annotation.Nullable;
  */
 public class HomeFragment extends Fragment {
 
-    //Models
-    private List<MessageModel> messageList;
-    private List<UserModel> userList;
     //RecyclerView
     private RecyclerView messageListView;
     private MessageRecyclerAdapter messageRecyclerAdapter;
+    //Models
+    private List<MessageModel> messageList;
+    private List<UserModel> userList;
+
     //Firebase
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
@@ -66,11 +67,10 @@ public class HomeFragment extends Fragment {
         //Setting RecyclerViewAdapter
         messageListView = view.findViewById(R.id.home_blog_post_view);
         messageRecyclerAdapter = new MessageRecyclerAdapter(messageList,userList);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(container.getContext());
         messageListView.setLayoutManager(mLayoutManager);
-/*        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);*/
         messageListView.setAdapter(messageRecyclerAdapter);
+        messageListView.setHasFixedSize(true);
 
         if(firebaseAuth.getCurrentUser() != null){
             firebaseFirestore = FirebaseFirestore.getInstance();
@@ -125,8 +125,14 @@ public class HomeFragment extends Fragment {
                                                 //adding MessageModel,UserModel to List messageList,usersList
                                                 //recyclerAdapter receives data and displays it in recycler view
                                                 UserModel user = task.getResult().toObject(UserModel.class);
+                                                if (firstPageLodaded) {
                                                     userList.add(user);
                                                     messageList.add(messageModel);
+                                                } else {
+                                                    //if the data is first loaded add it atop recycleView
+                                                    userList.add(0, user);
+                                                    messageList.add(0, messageModel);
+                                                }
                                                 messageRecyclerAdapter.notifyDataSetChanged();
                                             }
                                         }
@@ -176,15 +182,8 @@ public class HomeFragment extends Fragment {
                                                         //recyclerAdapter receives data and displays it in recycler view
                                                         UserModel user = task.getResult().toObject(UserModel.class);
 
-                                                        //while data is retrieved MessagePost will be loading si this check needs to be in place
-                                                        if (firstPageLodaded) {
                                                             userList.add(user);
                                                             messageList.add(messageModel);
-                                                        } else {
-                                                            //if the data is first loaded add it atop recycleView
-                                                            userList.add(0, user);
-                                                            messageList.add(0, messageModel);
-                                                        }
                                                         //notifiy adapter for data changes
                                                         messageRecyclerAdapter.notifyDataSetChanged();
                                                     }
