@@ -50,11 +50,12 @@ public class MainActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         //toolbar
         mainToolbar = findViewById(R.id.main_toolbar);
-        mainBotttomNavigation = findViewById(R.id.main_bottom_navigation);
         setSupportActionBar(mainToolbar);
+        getSupportActionBar().setTitle("Starter");
 
         if(mAuth.getCurrentUser() != null){
             //fragments
+            mainBotttomNavigation = findViewById(R.id.main_bottom_navigation);
             homeFragment = new HomeFragment();
             accountFragment = new AccountFragment();
             notificationFragment = new NotificationFragment();
@@ -70,13 +71,13 @@ public class MainActivity extends AppCompatActivity {
 
                     switch (item.getItemId()){
                         case R.id.nav_action_home:
-                            fragmentSwitcher(homeFragment,currentFragment);
+                            fragmentSwitcher(homeFragment, currentFragment);
                             return true;
                         case R.id.nav_action_account:
-                            fragmentSwitcher(accountFragment,currentFragment);
+                            fragmentSwitcher(accountFragment, currentFragment);
                             return true;
                         case R.id.nav_action_notificatin:
-                            fragmentSwitcher(notificationFragment,currentFragment);
+                            fragmentSwitcher(notificationFragment, currentFragment);
                             return true;
                         default:
                             return false;
