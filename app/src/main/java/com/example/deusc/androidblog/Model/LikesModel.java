@@ -2,22 +2,24 @@ package com.example.deusc.androidblog.Model;
 
 import java.util.Date;
 
-public class LikesModel {
+public class LikesModel extends MessageId {
 
-    String user_id;
+    String currentUser;
     Date timestamp;
 
-    public LikesModel(String user_id, Date timestamp) {
-        this.user_id = user_id;
+    public LikesModel(){}
+
+    public LikesModel(String currentUser, Date timestamp) {
+        this.currentUser = currentUser;
         this.timestamp = timestamp;
     }
 
     public String getUser_id() {
-        return user_id;
+        return currentUser;
     }
 
     public void setUser_id(String user_id) {
-        this.user_id = user_id;
+        this.currentUser = user_id;
     }
 
     public Date getTimestamp() {

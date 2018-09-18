@@ -90,12 +90,6 @@ public class CommentsActivity extends AppCompatActivity {
                         if (query.getType() == DocumentChange.Type.ADDED) {
                             CommentsModel commentsModel= query.getDocument().toObject(CommentsModel.class);
                             commentsList.add(commentsModel);
-
-                            String commentId = query.getDocument().getId();
-
-                            String messageUserId = query.getDocument().getString("user_id");
-                            String messageId = query.getDocument().getId();
-
                             commentsRecyclerAdapter.notifyDataSetChanged();
 
                         }
