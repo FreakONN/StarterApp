@@ -151,7 +151,6 @@ public class NewPostActivity extends AppCompatActivity {
                                 uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        /***/
                                         uploadTask.getResult().getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Uri> task) {

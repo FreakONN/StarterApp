@@ -39,6 +39,7 @@ public class CommentsActivity extends AppCompatActivity {
     private List<CommentsModel> commentsList;
     private List<UserModel> userList;
 
+
     private ImageView commentPostBtn;
     private EditText commentField;
     private String message_id;
@@ -91,7 +92,6 @@ public class CommentsActivity extends AppCompatActivity {
                             CommentsModel commentsModel= query.getDocument().toObject(CommentsModel.class);
                             commentsList.add(commentsModel);
                             commentsRecyclerAdapter.notifyDataSetChanged();
-
                         }
                     }
                 }
@@ -122,18 +122,7 @@ public class CommentsActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-                firebaseFirestore.collection("Posts/" + message_id + "/Notification").add(commentsMap)
-                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
 
-                                if(!task.isSuccessful()){
-                                    Toast.makeText(CommentsActivity.this, "Comment not posted: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                }else{
-                                    commentField.setText("");
-                                }
-                            }
-                        });
             }
         });
     }

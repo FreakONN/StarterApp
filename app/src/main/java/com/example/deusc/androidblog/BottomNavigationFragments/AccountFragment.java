@@ -87,7 +87,6 @@ public class AccountFragment extends Fragment {
                                         }
                                     });
                                     messageCount = 0;
-
                             }
                         }
                     }

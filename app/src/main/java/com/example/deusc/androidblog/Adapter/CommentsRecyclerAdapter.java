@@ -41,7 +41,7 @@ public class CommentsRecyclerAdapter extends RecyclerView.Adapter<CommentsRecycl
     @NonNull
     @Override
     public CommentsRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comments_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.reply_list_item, parent, false);
         context = parent.getContext();
         firebaseFirestore = FirebaseFirestore.getInstance();
         return new CommentsRecyclerAdapter.ViewHolder(view);
@@ -53,9 +53,6 @@ public class CommentsRecyclerAdapter extends RecyclerView.Adapter<CommentsRecycl
 
         String commentMessage = commentsModelList.get(position).getComment_message();
         holder.setCommentMessage(commentMessage);
-
-/*        final String user = commentsModelList.get(position).getUser_id();
-        holder.setUserName(user);*/
 
         String user_id = commentsModelList.get(position).getUser_id();
         //User Data will be retrieved here...
@@ -72,9 +69,6 @@ public class CommentsRecyclerAdapter extends RecyclerView.Adapter<CommentsRecycl
                 }
             }
         });
-
-        
-
     }
     @Override
     public int getItemCount() {
@@ -99,15 +93,15 @@ public class CommentsRecyclerAdapter extends RecyclerView.Adapter<CommentsRecycl
         }
 
         public void setCommentMessage(String commentMessage) {
-            comment_message = mView.findViewById(R.id.notification_message);
+            comment_message = mView.findViewById(R.id.comments_message);
             comment_message.setText(commentMessage);
         }
         public void setUserName(String user) {
-            user_id = mView.findViewById(R.id.comment_username);
+            user_id = mView.findViewById(R.id.comments_message);
             user_id.setText(user);
         }
         public void setUserImage(String profileImage){
-            image = mView.findViewById(R.id.notification_user_image);
+            image = mView.findViewById(R.id.comment_profile_image);
 
             RequestOptions placeholderRequest = new RequestOptions();
             placeholderRequest.placeholder(R.drawable.rectangle);

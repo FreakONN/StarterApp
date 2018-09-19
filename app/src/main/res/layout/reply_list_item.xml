@@ -16,36 +16,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/notification_comment"
+        android:id="@+id/reply_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="User liked you comment"
+        android:text="User"
         app:layout_constraintStart_toEndOf="@+id/notification_profile_image"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/notification_image_post"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="136dp"
-        android:layout_marginTop="16dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/notification_comment"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cube" />
-
     <TextView
-        android:id="@+id/notification_date"
+        android:id="@+id/notification_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:text="12, travnja, 1989"
+        android:layout_marginStart="16dp"
+        android:text="Comment"
         app:layout_constraintStart_toEndOf="@+id/notification_profile_image"
-        app:layout_constraintTop_toBottomOf="@+id/notification_comment" />
+        app:layout_constraintTop_toBottomOf="@+id/reply_user" />
 
 </android.support.constraint.ConstraintLayout>

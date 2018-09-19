@@ -19,16 +19,20 @@ import com.example.deusc.androidblog.Model.LikesModel;
 import com.example.deusc.androidblog.Model.UserModel;
 import com.example.deusc.androidblog.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -44,6 +48,7 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
     public List<UserModel> userList;
     public List<LikesModel> likesModelList;
 
+    String postId;
 
     public Context context;
 
@@ -70,20 +75,30 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
 
         firebaseFirestore.collection("Posts").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if(!documentSnapshots.isEmpty()){
-                    for(DocumentSnapshot query: documentSnapshots){
-                        firebaseFirestore.collection("Posts").document(query.getId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    String postImage = task.getResult().getString("thumbnail");
-                                    holder.setPostImage(postImage);
-                                } else {
-                                    //Firebase Exception
-                                }
+            public void onEvent(@Nullable final QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (documentSnapshots != null) {
+                    if (!documentSnapshots.isEmpty()) {
+                        for (DocumentChange query : documentSnapshots.getDocumentChanges()) {
+                            if (query.getType() == DocumentChange.Type.ADDED) {
+                                //postId =  query.getDocument().getString("user_id")
+                                postId = query.getDocument().getId();
+                                //check Comments
+                                firebaseFirestore.collection("Posts").get()
+                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot documentSnapshots) {
+                                        for(QueryDocumentSnapshot doc: documentSnapshots){
+                                            Map<String, Object> comments = doc.getData();
+                                            String key = comments.get("user_id").toString();
+                                            if(key.equals(currentUser)){
+                                                String postImage = comments.get("thumbnail").toString();
+                                                holder.setPostImage(postImage);
+                                            }
+                                        }
+                                    }
+                                });
                             }
-                        });
+                        }
                     }
                 }
             }
@@ -105,17 +120,6 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
             }
         });
 
-        firebaseFirestore.collection("Posts").document().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    String postImage = task.getResult().getString("image_url");
-                    holder.setPostImage(postImage);
-                } else {
-                    //Firebase Exception
-                }
-            }
-        });
         String commentMessage = commentsModelList.get(position).getComment_message();
         holder.setCommentMessage(commentMessage);
 
@@ -155,7 +159,7 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
             mView = itemView;
         }
         public void setCommentMessage(String name) {
-            comment = mView.findViewById(R.id.notification_message);
+            comment = mView.findViewById(R.id.notification_comment);
             comment.setText(name + " commented your post");
         }
         public void setDate(String time) {
@@ -173,7 +177,7 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
                     .into(postImage);
         }
         public void setProfileImage(String image){
-            profileImage = mView.findViewById(R.id.notification_user_image);
+            profileImage = mView.findViewById(R.id.notification_profile_image);
 
             RequestOptions placeholderRequest = new RequestOptions();
             placeholderRequest.placeholder(R.drawable.ellipse);

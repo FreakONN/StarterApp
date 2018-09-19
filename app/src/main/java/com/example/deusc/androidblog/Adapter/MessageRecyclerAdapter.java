@@ -39,6 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageRecyclerAdapter extends RecyclerView.Adapter<MessageRecyclerAdapter.ViewHolder> {
 
+
     public List<MessageModel> messageList;
     public List<UserModel> userList;
 
@@ -155,10 +156,8 @@ public class MessageRecyclerAdapter extends RecyclerView.Adapter<MessageRecycler
                             Map<String, Object> ratings = new HashMap<>();
                             ratings.put("timestamp", FieldValue.serverTimestamp());
                             ratings.put("currentUser", currentUser);
-                            ratings.put("user", userName);
                             //id of blog post
                             firebaseFirestore.collection("Posts/" + messageId + "/Likes").document(currentUser).set(ratings);
-                            firebaseFirestore.collection("Posts/" + messageId + "/Notification").document(currentUser).set(ratings);
                         }else {
                             firebaseFirestore.collection("Posts/" + messageId + "/Likes").document(currentUser).delete();
 

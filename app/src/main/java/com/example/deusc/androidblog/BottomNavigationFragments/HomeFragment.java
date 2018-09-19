@@ -122,9 +122,10 @@ public class HomeFragment extends Fragment {
                                         @Override
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             if(task.isSuccessful()){
+                                                DocumentSnapshot res = task.getResult();
                                                 //adding MessageModel,UserModel to List messageList,usersList
                                                 //recyclerAdapter receives data and displays it in recycler view
-                                                UserModel user = task.getResult().toObject(UserModel.class);
+                                                UserModel user = res.toObject(UserModel.class);
                                                 if (firstPageLodaded) {
                                                     userList.add(user);
                                                     messageList.add(messageModel);
@@ -160,35 +161,37 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                    //document added or exists
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        //get last visible document
-                        lastVisible = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() - 1);
+                    if(queryDocumentSnapshots != null) {
+                        //document added or exists
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            //get last visible document
+                            lastVisible = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() - 1);
 
-                        for (DocumentChange query : queryDocumentSnapshots.getDocumentChanges()) {
-                            if (queryDocumentSnapshots != null) {
-                                if (query.getType() == DocumentChange.Type.ADDED) {
-                                    //storring data to Object Model MessageModel
-                                    String messageId = query.getDocument().getId();
-                                    final MessageModel messageModel = query.getDocument().toObject(MessageModel.class).withId(messageId);
-                                    String messageUserId = query.getDocument().getString("user_id");
+                            for (DocumentChange query : queryDocumentSnapshots.getDocumentChanges()) {
+                                if (queryDocumentSnapshots != null) {
+                                    if (query.getType() == DocumentChange.Type.ADDED) {
+                                        //storring data to Object Model MessageModel
+                                        String messageId = query.getDocument().getId();
+                                        final MessageModel messageModel = query.getDocument().toObject(MessageModel.class).withId(messageId);
+                                        String messageUserId = query.getDocument().getString("user_id");
 
-                                    firebaseFirestore.collection("Users").document(messageUserId).get()
-                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                    if (task.isSuccessful()) {
-                                                        //adding MessageModel,UserModel to List messageList,usersList
-                                                        //recyclerAdapter receives data and displays it in recycler view
-                                                        UserModel user = task.getResult().toObject(UserModel.class);
+                                        firebaseFirestore.collection("Users").document(messageUserId).get()
+                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            //adding MessageModel,UserModel to List messageList,usersList
+                                                            //recyclerAdapter receives data and displays it in recycler view
+                                                            UserModel user = task.getResult().toObject(UserModel.class);
 
                                                             userList.add(user);
                                                             messageList.add(messageModel);
-                                                        //notifiy adapter for data changes
-                                                        messageRecyclerAdapter.notifyDataSetChanged();
+                                                            //notifiy adapter for data changes
+                                                            messageRecyclerAdapter.notifyDataSetChanged();
+                                                        }
                                                     }
-                                                }
-                                            });
+                                                });
+                                    }
                                 }
                             }
                         }

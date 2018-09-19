@@ -6,41 +6,33 @@
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/comment_profile_image"
+        android:id="@+id/notification_profile_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/ellipse"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/comments_message"
+        android:id="@+id/notification_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
         android:text="User liked you comment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/comment_post_image"
-        app:layout_constraintStart_toEndOf="@+id/comment_profile_image"
-        app:layout_constraintTop_toBottomOf="@+id/comment_date" />
+        app:layout_constraintStart_toEndOf="@+id/notification_profile_image"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/comment_post_image"
+        android:id="@+id/like_post_image"
         android:layout_width="42dp"
         android:layout_height="42dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="136dp"
         android:layout_marginTop="16dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/notification_comment"
@@ -48,14 +40,12 @@
         app:srcCompat="@drawable/cube" />
 
     <TextView
-        android:id="@+id/comment_date"
+        android:id="@+id/like_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="88dp"
         android:text="12, travnja, 1989"
-        app:layout_constraintEnd_toStartOf="@+id/comment_post_image"
-        app:layout_constraintStart_toEndOf="@+id/comment_profile_image"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintStart_toEndOf="@+id/notification_profile_image"
+        app:layout_constraintTop_toBottomOf="@+id/notification_comment" />
 
 </android.support.constraint.ConstraintLayout>
