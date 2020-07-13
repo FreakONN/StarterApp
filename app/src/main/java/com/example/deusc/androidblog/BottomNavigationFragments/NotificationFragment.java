@@ -62,7 +62,7 @@ public class NotificationFragment extends Fragment {
 
         //setting up adapter and recycler view
         notificationRecyclerView = view.findViewById(R.id.notification_list_view);
-        notificationsRecyclerAdapter = new NotificationsRecyclerAdapter(commentsModelList);
+        notificationsRecyclerAdapter = new NotificationsRecyclerAdapter(commentsModelList,likesModelList);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         notificationRecyclerView.setLayoutManager(mLayoutManager);
@@ -92,12 +92,10 @@ public class NotificationFragment extends Fragment {
                                 });
                             }
                         }
-
                 }
             });
         }
 
         return view;
     }
-
 }

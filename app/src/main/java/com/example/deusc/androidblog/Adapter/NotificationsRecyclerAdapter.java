@@ -4,15 +4,18 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.deusc.androidblog.Model.CommentsModel;
+import com.example.deusc.androidblog.Model.LikesModel;
 import com.example.deusc.androidblog.Model.UserModel;
 import com.example.deusc.androidblog.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -38,13 +42,14 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
 
     public List<CommentsModel> commentsModelList;
     public List<UserModel> userList;
-    public List<Object> likesList;
+    public List<LikesModel> likesModelList;
 
 
     public Context context;
 
-    public NotificationsRecyclerAdapter(List<CommentsModel> commentsModelList) {
+    public NotificationsRecyclerAdapter(List<CommentsModel> commentsModelList, List<LikesModel> likesModelList) {
         this.commentsModelList = commentsModelList;
+        this.likesModelList = likesModelList;
     }
 
     @NonNull
@@ -114,6 +119,14 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
         String commentMessage = commentsModelList.get(position).getComment_message();
         holder.setCommentMessage(commentMessage);
 
+        try {
+            long millisecond = commentsModelList.get(position).getTimestamp().getTime();
+            String dateString = DateFormat.format("dd/mm/yyyy", new Date(millisecond)).toString();
+            holder.setDate(dateString);
+        } catch (Exception e) {
+            Toast.makeText(context, "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -143,7 +156,7 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
         }
         public void setCommentMessage(String name) {
             comment = mView.findViewById(R.id.notification_message);
-            comment.setText(name + " liked your post");
+            comment.setText(name + " commented your post");
         }
         public void setDate(String time) {
             commentTimestamp = mView.findViewById(R.id.notification_date);

@@ -64,7 +64,6 @@ public class CommentsActivity extends AppCompatActivity {
         currentUserId = firebaseAuth.getCurrentUser().getUid();
         //pasted string has to be of the same name
         message_id = getIntent().getStringExtra("message_id");
-        username = getIntent().getStringExtra("username");
 
         commentPostBtn =  findViewById(R.id.comment_post_btn);
         commentField = findViewById(R.id.comment_field);
@@ -91,12 +90,6 @@ public class CommentsActivity extends AppCompatActivity {
                         if (query.getType() == DocumentChange.Type.ADDED) {
                             CommentsModel commentsModel= query.getDocument().toObject(CommentsModel.class);
                             commentsList.add(commentsModel);
-
-                            String commentId = query.getDocument().getId();
-
-                            String messageUserId = query.getDocument().getString("user_id");
-                            String messageId = query.getDocument().getId();
-
                             commentsRecyclerAdapter.notifyDataSetChanged();
 
                         }

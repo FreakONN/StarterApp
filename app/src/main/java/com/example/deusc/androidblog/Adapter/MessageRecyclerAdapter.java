@@ -88,9 +88,7 @@ public class MessageRecyclerAdapter extends RecyclerView.Adapter<MessageRecycler
             String dateString = DateFormat.format("dd/mm/yyyy", new Date(millisecond)).toString();
             holder.setDate(dateString);
         } catch (Exception e) {
-
             Toast.makeText(context, "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
         }
         //Like counts feature
         firebaseFirestore.collection("Posts/" + messageId + "/Likes").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -132,7 +130,8 @@ public class MessageRecyclerAdapter extends RecyclerView.Adapter<MessageRecycler
             @Override
             public void onClick(View v) {
                 //Get Likes - realtime changes
-                firebaseFirestore.collection("Posts/" + messageId + "/Likes").document(currentUser).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                firebaseFirestore.collection("Posts/" + messageId + "/Likes").document(currentUser)
+                        .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                         //change color of button on database change
